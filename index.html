@@ -4057,6 +4057,94 @@
     .s-mod-setweather .setweather-setting .setting-save-or-cancel .setting-cancel {
         cursor: pointer
     }
+
+    /* 触发弹窗图片的样式 */
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+ 
+#myImg:hover {opacity: 0.7;}
+ 
+/* 弹窗背景 */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+ 
+/* 图片 */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+ 
+/* 文本内容 */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+ 
+/* 添加动画 */
+.modal-content, #caption { 
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+ 
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
+ 
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+ 
+/* 关闭按钮 */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+ 
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+ 
+/* 小屏幕中图片宽度为 100% */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}
+
     </style>
     <!--[if lte IE 8]><style index="index" data-compress="strip">.s_form{top:260px}</style><![endif]-->
     <style data-for="debug">#debug{display:none!important;}</style>
@@ -4099,6 +4187,7 @@
         body.className += ' browser-edge';
     }
 </script>
+
     <div id="wrapper">
         <script>if(window.bds&&bds.util&&bds.util.setContainerWidth){bds.util.setContainerWidth();}</script>
         <div id="head">
@@ -4123,7 +4212,7 @@
                         <!-- 	<img hidefocus="true" id="s_lg_img_new" class='index-logo-srcnew' src="images/baidu1.png" width="240" height="80"> -->
                         	<img id="s_lg_img" class="s_lg_img_gold_show" src="images/baidu1.png" width="270" height="129" onerror="this.src='https://dss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1-66368c33f8.png';this.onerror=null;" usemap="#mp">
                         </div>
-                        <form id="form" name="f" action="show.html" class="fm"><input type="hidden" name="ie" value="utf-8"><input type="hidden" name="f" value="8"><input type="hidden" name="rsv_bp" value="1"><input type="hidden" name="rsv_idx" value="1"><input type=hidden name=ch value=""><input type=hidden name=tn value="baidu"><input type=hidden name=bar value=""><span class="bg s_ipt_wr"><input id="kw" name="wd" class="s_ipt" value="" maxlength="255" autocomplete="off"></span><span class="bg s_btn_wr"><input type="submit" id="su" value="百度一下" class="bg s_btn"></span><span class="tools"><span id="mHolder">
+                        <form id="form" name="f"  class="fm"><input type="hidden" name="ie" value="utf-8"><input type="hidden" name="f" value="8"><input type="hidden" name="rsv_bp" value="1"><input type="hidden" name="rsv_idx" value="1"><input type=hidden name=ch value=""><input type=hidden name=tn value="baidu"><input type=hidden name=bar value=""><span class="bg s_ipt_wr"><input id="kw" name="wd" class="s_ipt" value="" maxlength="255" autocomplete="off"></span><span class="bg s_btn_wr"><input type="submit" id="su" value="百度一下" class="bg s_btn"></span><span class="tools"><span id="mHolder">
                                     <div id="mCon"><span>输入法</span></div>
                                     <ul id="mMenu">
                                         <li><a href="javascript:;" name="ime_hw">手写</a></li>
@@ -4135,6 +4224,21 @@
                     </div>
                 </div>
             </div>
+            <!-- 触发弹窗 - 图片改为你的图片地址 -->
+<img id="myImg" src="images/loveu.gif" alt="恭喜你！触发了彩蛋。 我也喜欢你，既不是外貌也不是才华，而是两颗灵魂未来要一同经历的未知的时光，最好的年纪刚到来！我会陪着你，做你经纪人！关于爱的深层含义(请咨询本人)" style="display:none" width="300" height="200">
+ 
+<!-- 弹窗 -->
+<div id="myModal" class="modal">
+ 
+  <!-- 关闭按钮 -->
+  <span id="floatclose" class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+ 
+  <!-- 弹窗内容 -->
+  <img class="modal-content" id="img01">
+ 
+  <!-- 文本描述 -->
+  <div id="caption"></div>
+</div>
             <div id="s_wrap" class="s-isindex-wrap">
                 <div id="s_main" class="main clearfix"></div>
             </div>
@@ -4160,4 +4264,39 @@
     		allLinks[i].onclick = () => {alert('去搜索42吧！')};
     	}
     </script>
+    <script>
+    btn = document.getElementById("form")
+    
+    // 获取 <span> 元素，设置关闭按钮
+    var span = document.getElementById("floatclose");
+    span.onclick = function() { modal.style.display = "none";}
+
+    btn.onsubmit=() => {
+        let inputu = document.getElementById("kw").value;
+        if (inputu == "21 + 21" || inputu == "我喜欢你" || inputu == "21+21"|| inputu == "42")  {
+            // 获取弹窗
+            var modal = document.getElementById('myModal');
+             
+            // 获取图片插入到弹窗 - 使用 "alt" 属性作为文本部分的内容
+            var img = document.getElementById('myImg');
+            var modalImg = document.getElementById("img01");
+            var captionText = document.getElementById("caption");
+
+            modal.style.display = "block";
+            modalImg.src = img.src;
+            captionText.innerHTML = img.alt;
+
+             
+            
+            return false;
+        }else {
+            btn.action="./show.html";
+            btn.method="post";
+            btn.submit();
+        }
+        
+    }
+            
+
+</script>
 </body>
